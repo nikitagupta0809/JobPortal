@@ -11,6 +11,7 @@ const initializePassport = require('./passportConfig');
 initializePassport(passport);
 
 const PORT = process.env.PORT || 4000;
+app.use(express.static('public'));
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
@@ -118,29 +119,42 @@ app.post(
       }
     });
 
-// app.post("/users/login", passport.authenticate('local'), 
-// {
+app.post('/users/dashboardRec',  async (req, res) => {
+    let { jobid, jobname, jobdescr } = req.body;
+    console.log({
+        jobid,
+        jobname,
+        jobdescr
+    });
 
-// function(req, res) {
+    //inserting into db if the job id does not exist in the db
+//     pool.query(
+//         `SELECT * FROM job WHERE jobid = $1`, [jobid], (err, results)=>{
+//             if(err){
+//                 throw err
+//             }
+//             console.log(results.rows)
 
-//     let { role, email, password } = res.body;
-//     console.log("role is:", res.body);
-
-//         successRedirect: "/users/dashboard",
-//         failureRedirect: "/users/login",
-//         failureFlash: true
-//       })
-//     }
-//     );
-    // If this function gets called, authentication was successful.
-    // `req.user` contains the authenticated user.
-
-   // res.redirect('/users/' + req.user.username);
-  //  successRedirect: '/users/dashboard',
-  //  failureRedirect: '/users/login',
-  //  failureFlash: true
-
-
+//             if(results.rows.length > 0){
+//               //  errors.push({ message: "Job ID alreadys exists!"})
+//               console.log('Job Id already exists in database!')
+//                 res.render('dashboardRec')
+//             }
+//             else{
+//                 pool.query(
+//                     `INSERT INTO job (jobid, name, description) values ($1, $2, $3)`,
+//                      [jobid, jobname, jobdescr], (err, results)=>{
+//                         if(err){
+//                             throw err;
+//                         }
+//                         console.log(results.rows);
+//                       //  req.flash('success_msg', "You have successfully registered! Please login.");
+//                         res.redirect('/users/dashboardRec');
+//                     }
+//                 )
+//             }
+// })
+})
 function checkAuthenticated(req, res, next){
     if(req.isAuthenticated()){
         return res.redirect('/users/dashboard');
