@@ -163,7 +163,6 @@ app.post('/users/dashboardRec', async (req, res) => {
 })
 })
 
-
 app.post('/users/dashboardRec/jobapplicants', async (req, res) => {
     let { jobid2 } = req.body;
     console.log({
@@ -188,11 +187,33 @@ app.post('/users/dashboardRec/jobapplicants', async (req, res) => {
             }
         })
     })
-
-
+    app.post('/users/dashboardCand', async (req, res) => {
+        let { jobid2 } = req.body;
+        console.log(
+            "inside func"
+        );
+    
+        // fetching results for the jobid 
+        pool.query(
+            `SELECT * FROM job`, [], (err, results)=>{
+                if(err){
+                    throw err
+                }
+                if(results.rows.length > 0){
+                    console.log('Jobs fetched!')
+                    let obj = results.rows;
+                    console.log(obj)
+                    res.render('dashboardCand', {obj : obj})
+                }
+                else{
+                    req.flash('success_msg', "No jobs found!");
+                    res.render('dashboardCand');
+                }
+            })
+        })
 function checkAuthenticated(req, res, next){
     if(req.isAuthenticated()){
-        return res.redirect('/users/dashboard');
+        return res.redirect('/users/login');
     }
     next();
 }

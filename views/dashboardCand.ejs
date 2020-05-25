@@ -6,13 +6,34 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <!-- skeleton css -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
         <title>Document</title>
+        <style>
+            a{
+                text-decoration: none;
+            }
+        </style>
     </head>
     <body>
         <a href="/users/logout">Logout</a>
         <h1> Welcome to Candidate Portal</h1>
-        <h3>Hello <%= user %></h2>
-        <h3>Your portal <%=role %></h2>
-
+        <h3>Jobs:</h3>
+        <div>
+            <table>
+                <tr>
+                    <th>JobId</th>
+                    <th>Name</th>
+                    <th>Application Link</th>
+                </tr>
+                <form action="/users/dashboardCand" method="POST">
+                    <div>
+                        <input type="submit" value="View Job Postings"/>
+                    </div>
+                </form>
+            </table>
+            <%=obj%>
+        </div>
     </body>
 </html>
