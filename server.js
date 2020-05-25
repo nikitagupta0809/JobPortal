@@ -50,6 +50,10 @@ app.get('/users/dashboardRec/jobapplicants', checkNotAuthenticated, (req, res)=>
     res.render('jobapplicants', {user: req.user.email, role: req.user.role});
 });
 
+app.get('/users/dashboardCand/apply', checkNotAuthenticated, (req, res)=>{
+    res.render('apply', {user: req.user.email, role: req.user.role});
+});
+
 app.get('/users/logout', (req, res) =>{
     req.logOut();
     req.flash("success_msg", "You have logged out successfully!");
@@ -187,7 +191,7 @@ app.post('/users/dashboardRec/jobapplicants', async (req, res) => {
             }
         })
     })
-    app.post('/users/dashboardCand', async (req, res) => {
+    app.post('/users/dashboardCand/apply', async (req, res) => {
         let { jobid2 } = req.body;
         console.log(
             "inside func"
@@ -203,7 +207,7 @@ app.post('/users/dashboardRec/jobapplicants', async (req, res) => {
                     console.log('Jobs fetched!')
                     let obj = results.rows;
                     console.log(obj)
-                    res.render('dashboardCand', {obj : obj})
+                    res.render('apply', {obj : obj})
                 }
                 else{
                     req.flash('success_msg', "No jobs found!");

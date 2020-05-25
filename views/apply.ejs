@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+
+        <title>Job Listings</title>
+    </head>
+    <body>
+        <h1>Job Listings</h1>
+        <table>
+            <tr>
+                <th>Job ID</th>
+                <th>Job Name</th>
+                <th>Application Link</th>
+            </tr>
+                <% obj.forEach(function(item) { %>
+                <tr>
+                    <td> <%= item.jobid %></td>
+                    <td> <%= item.name %></td> 
+                    <td>
+                        <button><a href="#ex1" rel="modal:open">Apply Now!</a></button>
+                        <div id = "ex1" class="modal">
+                            <div class="modal-content">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="nine columns"><%= item.name %></div>
+                                        <div class="three columns"><b>Job ID: </b><%= item.jobid %></div><br><br>
+                                    </div>
+                                    <div class="row">
+                                        <b>Job Description</b> <br>
+                                        <%= item.description%>
+                                    </div><br><br>
+                                    <div class="row">
+                                        <b>Recruiter's email:</b><br>
+                                        <%=item.recruiter%>
+                                    </div>
+                                    <div>
+                                        <input type="text" name="jobid" id="jobid" placeholder="Job ID"/>
+                                    </div>
+                                    <div>
+                                        <input type="email" name="email" id="email" placeholder="Your email"/>
+                                    </div>
+                                    <input class="button-primary" type="submit" id=jobid name= jobid></button>
+                                </div>
+                            </div>
+                        </div>
+                    </td> 
+                </tr>
+            <% }); %>
+        </table>
+        <br>
+        <a href="/users/dashboardCand">Back to Candidate dashboard</a>
+    </body>
+</html>

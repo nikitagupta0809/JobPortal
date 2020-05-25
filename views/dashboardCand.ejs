@@ -21,49 +21,9 @@
         <h1> Welcome to Candidate Portal</h1>
         <h3>Jobs:</h3>
         <div>
-          
-                <form action="/users/dashboardCand" method="POST">
-                    <div>
-                        <input type="submit" value="View Job Postings"/>
-                            <% obj.forEach(function(item) { %>
-                                <table>
-                                    <tr>
-                                        <th>JobId</th>
-                                        <th>Name</th>
-                                        <th>Application Link</th>
-                                    </tr>
-                                    <td><%= item.jobid %></td>
-                                    <td> <%= item.name %></td> -->
-                                    <td>
-                                <a href="#ex1" rel="modal:open">Apply Now!</a>
-                            <div id = "ex1" class="modal">
-                                <div class="modal-content">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="nine columns"><%= item.name %></div>
-                                            <div class="three columns"><b>Job ID: </b><%= item.jobid %></div><br><br>
-                                        </div>
-                                        <div class="row">
-                                            <b>Job Description</b> <br>
-                                            <%= item.description%>
-                                        </div><br><br>
-                                        <div class="row">
-                                            <b>Recruiter's email:</b><br>
-                                            <%=item.recruiter%>
-                                        </div>
-                                        <div>
-                                            <input type="text" name="jobid" id="jobid" placeholder="Job ID"/>
-                                        </div>
-                                        <div>
-                                            <input type="email" name="email" id="email" placeholder="Your email"/>
-                                        </div>
-                                        <input class="button-primary" type="submit" id=jobid name= jobid>Apply!</button>
-                                    </div>
-                                </div>
-                            </div>
-                    </td> 
-                    </table>
-                <% }) %>
+            <form action="/users/dashboardCand/apply" method="POST">
+                <input type="submit" value="View Job Postings"/>
+            </form>
         </div>
     </body>
 </html>
