@@ -10,6 +10,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
 
         <title>Job Listings</title>
+        <style>
+            a{
+                text-decoration: none;
+            }
+        </style>
     </head>
     <body>
         <h1>Job Listings</h1>
@@ -35,18 +40,21 @@
                                     <div class="row">
                                         <b>Job Description</b> <br>
                                         <%= item.description%>
-                                    </div><br><br>
+                                    </div><br>
                                     <div class="row">
                                         <b>Recruiter's email:</b><br>
                                         <%=item.recruiter%>
                                     </div>
-                                    <div>
-                                        <input type="text" name="jobid" id="jobid" placeholder="Job ID"/>
-                                    </div>
-                                    <div>
-                                        <input type="email" name="email" id="email" placeholder="Your email"/>
-                                    </div>
-                                    <input class="button-primary" type="submit" id=jobid name= jobid></button>
+                                    <br>
+                                    <form action="/users/dashboardCand/applied" method="POST">
+                                        <div>
+                                            <input type="text" name="jobid" id="jobid" placeholder="Job ID"/>
+                                        </div>
+                                        <div>
+                                            <input type="email" name="email" id="email" placeholder="Your email"/>
+                                        </div>
+                                        <input class="button-primary" type="submit"></button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

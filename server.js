@@ -54,6 +54,10 @@ app.get('/users/dashboardCand/apply', checkNotAuthenticated, (req, res)=>{
     res.render('apply', {user: req.user.email, role: req.user.role});
 });
 
+app.get('/users/dashboardCand/applied', checkNotAuthenticated, (req, res) =>{
+    res.render('apply', {user: req.user.email, role: req.user.role});
+});
+
 app.get('/users/logout', (req, res) =>{
     req.logOut();
     req.flash("success_msg", "You have logged out successfully!");
@@ -128,6 +132,7 @@ app.post(
       }
     });
 
+//posting a job 
 app.post('/users/dashboardRec', async (req, res) => {
     let { jobid, jobname, jobdescr } = req.body;
     let recruiter = req.user.email;
@@ -191,30 +196,68 @@ app.post('/users/dashboardRec/jobapplicants', async (req, res) => {
             }
         })
     })
-    app.post('/users/dashboardCand/apply', async (req, res) => {
-        let { jobid2 } = req.body;
-        console.log(
-            "inside func"
-        );
-    
-        // fetching results for the jobid 
-        pool.query(
-            `SELECT * FROM job`, [], (err, results)=>{
-                if(err){
-                    throw err
-                }
-                if(results.rows.length > 0){
-                    console.log('Jobs fetched!')
-                    let obj = results.rows;
-                    console.log(obj)
-                    res.render('apply', {obj : obj})
-                }
-                else{
-                    req.flash('success_msg', "No jobs found!");
-                    res.render('dashboardCand');
-                }
-            })
+app.post('/users/dashboardCand/apply', async (req, res) => {
+    let { jobid, email } = req.body;
+    console.log(
+        "inside func", jobid, email
+    );
+
+    // fetching results for the jobid 
+    pool.query(
+        `SELECT * FROM job`, [], (err, results)=>{
+            if(err){
+                throw err
+            }
+            if(results.rows.length > 0){
+                console.log('Jobs fetched!')
+                let obj = results.rows;
+                console.log(obj)
+                res.render('apply', {obj : obj})
+            }
+            else{
+                req.flash('success_msg', "No jobs found!");
+                res.render('dashboardCand');
+            }
         })
+    })
+
+//user applies to a job
+app.post('/users/dashboardCand/applied', async (req, res) => {
+    let { jobid, email } = req.body;
+    console.log({
+        jobid,
+        email
+    });
+
+     //inserting into db if the job id does not exist in the db
+    pool.query(
+        `SELECT * FROM appliedto WHERE jobid = $1 and candidateid=$2`, [jobid, email], (err, results)=>{
+            if(err){
+                throw err
+            }
+
+            if(results.rows.length > 0){
+                errors.push({ message: "Job ID alreadys exists!"})
+                console.log('You have already applied to this job!')
+                res.render('dashboardCand', { errors })
+            }
+            else{
+                console.log("inserting into db")
+                pool.query(
+                    `INSERT INTO appliedto (jobid, candidateid) values ($1, $2)`,
+                        [jobid, email ], (err, results)=>{
+                        if(err){
+                            throw err;
+                        }
+                        console.log(results.rows);
+                        req.flash('success_msg', "You have successfully applied for the job.");
+                        res.redirect('/users/dashboardCand');
+                    }
+                )
+            }
+})
+})
+
 function checkAuthenticated(req, res, next){
     if(req.isAuthenticated()){
         return res.redirect('/users/login');

@@ -10,15 +10,15 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
         <title>Document</title>
-        <style>
-            a{
-                text-decoration: none;
-            }
-        </style>
     </head>
     <body>
         <a href="/users/logout">Logout</a>
         <h1> Welcome to Candidate Portal</h1>
+        <ul>
+            <% if(messages.success_msg) { %>
+            <li><%= messages.success_msg %></li>
+            <% } %>
+        </ul>
         <h3>Jobs:</h3>
         <div>
             <form action="/users/dashboardCand/apply" method="POST">
