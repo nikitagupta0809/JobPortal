@@ -46,6 +46,10 @@ app.get('/users/dashboardRec', checkNotAuthenticated, (req, res)=>{
     res.render('dashboardRec', {user: req.user.email, role: req.user.role});
 });
 
+app.get('/users/dashboardRec/jobapplicants', checkNotAuthenticated, (req, res)=>{
+    res.render('jobapplicants', {user: req.user.email, role: req.user.role});
+});
+
 app.get('/users/logout', (req, res) =>{
     req.logOut();
     req.flash("success_msg", "You have logged out successfully!");
@@ -158,6 +162,34 @@ app.post('/users/dashboardRec', async (req, res) => {
             }
 })
 })
+
+
+app.post('/users/dashboardRec/jobapplicants', async (req, res) => {
+    let { jobid2 } = req.body;
+    console.log({
+        jobid2
+    });
+
+    // fetching results for the jobid 
+    pool.query(
+        `SELECT * FROM appliedto WHERE jobid = $1`, [jobid2], (err, results)=>{
+            if(err){
+                throw err
+            }
+            if(results.rows.length > 0){
+                console.log('Job Id found!')
+                let obj = results.rows;
+                console.log(obj)
+                res.render('jobapplicants', {obj : obj})
+            }
+            else{
+                req.flash('success_msg', "No Applicants for this Job ID!");
+                res.render('dashboardRec');
+            }
+        })
+    })
+
+
 function checkAuthenticated(req, res, next){
     if(req.isAuthenticated()){
         return res.redirect('/users/dashboard');

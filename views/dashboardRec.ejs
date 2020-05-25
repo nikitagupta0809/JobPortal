@@ -41,7 +41,7 @@
                         <input type="text" name="jobname" id="jobname" placeholder="Job Name"/>
                     </div>
                     <div>
-                        <input type="text" name="jobdescr" id="jobdescr" placeholder="Job Description"/>
+                        <textarea class="u-full-width" name="jobdescr" id="jobdescr" placeholder="Job Description"></textarea>
                     </div>
                     <div>
                         <input type="submit" value="Post Job"/>
@@ -59,9 +59,9 @@
 
         <div id = "ex2" class="modal">
             <div class="modal-content">
-                <form action="/users/dashboardRec" method="POST">
+                <form action="/users/dashboardRec/jobapplicants" method="POST">
                 <div>
-                    <input type="text" name="jobid" id="jobid" placeholder="Job ID"/>
+                    <input type="text" name="jobid2" id="jobid2" placeholder="Job ID"/>
                 </div>
                 <div>
                     <input type="submit" value="View Applicants"/>
