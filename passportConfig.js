@@ -19,7 +19,7 @@ const authenticateUser = (email, password, done) => {
                     if(err){
                         throw err;
                     }
-                    else if(isMatch){
+                    else if(isMatch){ // if match, return user 
                         return done(null, user);
                     }
                     else{

@@ -10,15 +10,16 @@ const initializePassport = require('./passportConfig');
 
 initializePassport(passport);
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4000; // uses process.env.port in production mode and 4000 in developer mode.
 app.use(express.static('public'));
 
+//middle ware: ejs
 app.set('view engine', 'ejs');
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false })); //send details from front end 
 app.use(session({
-    secret: 'secret', 
-    resave: false,
-    saveUninitialized: false
+    secret: 'secret', // does encryption
+    resave: false,    // save information ?
+    saveUninitialized: false //save session details ? 
 }));
 
 app.use(passport.initialize());
@@ -119,8 +120,10 @@ app.post(
       }
     });
 
-app.post('/users/dashboardRec',  async (req, res) => {
+app.post('/users/dashboardRec', async (req, res) => {
     let { jobid, jobname, jobdescr } = req.body;
+    let recruiter = req.user.email;
+    console.log("reecruiter: "+recruiter);
     console.log({
         jobid,
         jobname,
@@ -128,32 +131,32 @@ app.post('/users/dashboardRec',  async (req, res) => {
     });
 
     //inserting into db if the job id does not exist in the db
-//     pool.query(
-//         `SELECT * FROM job WHERE jobid = $1`, [jobid], (err, results)=>{
-//             if(err){
-//                 throw err
-//             }
-//             console.log(results.rows)
+    pool.query(
+        `SELECT * FROM job WHERE jobid = $1`, [jobid], (err, results)=>{
+            if(err){
+                throw err
+            }
 
-//             if(results.rows.length > 0){
-//               //  errors.push({ message: "Job ID alreadys exists!"})
-//               console.log('Job Id already exists in database!')
-//                 res.render('dashboardRec')
-//             }
-//             else{
-//                 pool.query(
-//                     `INSERT INTO job (jobid, name, description) values ($1, $2, $3)`,
-//                      [jobid, jobname, jobdescr], (err, results)=>{
-//                         if(err){
-//                             throw err;
-//                         }
-//                         console.log(results.rows);
-//                       //  req.flash('success_msg', "You have successfully registered! Please login.");
-//                         res.redirect('/users/dashboardRec');
-//                     }
-//                 )
-//             }
-// })
+            if(results.rows.length > 0){
+              //  errors.push({ message: "Job ID alreadys exists!"})
+                console.log('Job Id already exists in database!')
+                res.render('dashboardRec')
+            }
+            else{
+                console.log("inserting into db")
+                pool.query(
+                    `INSERT INTO job (jobid, name, description, recruiter) values ($1, $2, $3, $4)`,
+                     [jobid, jobname, jobdescr, recruiter ], (err, results)=>{
+                        if(err){
+                            throw err;
+                        }
+                        console.log(results.rows);
+                        req.flash('success_msg', "You have successfully posted the job.");
+                        res.redirect('/users/dashboardRec');
+                    }
+                )
+            }
+})
 })
 function checkAuthenticated(req, res, next){
     if(req.isAuthenticated()){

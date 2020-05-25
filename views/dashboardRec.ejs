@@ -20,8 +20,11 @@
     <body>
         <a href="/users/logout">Logout</a>
         <h1> Welcome to recruiter Portal</h1>
-        <!-- <h2>Hello <%= user %></h2> -->
-        <!-- <h2>Your portal: <%=role %></h2> -->
+        <ul>
+            <% if(messages.success_msg) { %>
+            <li><%= messages.success_msg %></li>
+            <% } %>
+        </ul>
         <div>
             <!-- modal to post a job -->
             <button value="Post a Job">            
