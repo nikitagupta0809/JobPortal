@@ -211,7 +211,7 @@ app.post('/users/dashboardCand/apply', async (req, res) => {
             if(results.rows.length > 0){
                 console.log('Jobs fetched!')
                 let obj = results.rows;
-                console.log(obj)
+                //console.log(obj)
                 res.render('apply', {obj : obj})
             }
             else{
