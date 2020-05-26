@@ -22,6 +22,11 @@
             <li><%= messages.success_msg %></li>
             <% } %>
         </ul>
+        <ul>
+            <% if(messages.error){ %>
+                <li> <%= messages.error %></li>
+            <% } %>
+        </ul>
         <h5>Jobs:</h5>
         <div>
             <form action="/users/dashboardCand/apply" method="POST">

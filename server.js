@@ -223,6 +223,7 @@ app.post('/users/dashboardCand/apply', async (req, res) => {
 
 //user applies to a job
 app.post('/users/dashboardCand/applied', async (req, res) => {
+    let errors = [];
     let { jobid, email } = req.body;
     console.log({
         jobid,
@@ -235,11 +236,10 @@ app.post('/users/dashboardCand/applied', async (req, res) => {
             if(err){
                 throw err
             }
-
             if(results.rows.length > 0){
-                errors.push({ message: "Job ID alreadys exists!"})
+                req.flash({ success_msg: "You have already applied to this job!"})
                 console.log('You have already applied to this job!')
-                res.render('dashboardCand', { errors })
+                res.render('dashboardCand', { errors : errors })
             }
             else{
                 console.log("inserting into db")
