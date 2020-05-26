@@ -32,7 +32,38 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    margin-top: 5%;
 }
 .wider{
     width: 100%;
+}
+.landing-page{
+    background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url('/assets/bg.jpg') no-repeat center fixed; 
+    z-index: -1;
+    background-size: cover;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+
+}
+.banner{
+    background-color: cornsilk;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: black;
+}
+footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 10%;
+    width: 100%;
+    background-color:cornsilk;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
